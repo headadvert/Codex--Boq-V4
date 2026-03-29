@@ -1,0 +1,60 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Cost Estimator v4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="assets/app.css"/>
+</head>
+<body data-page="cost">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="index.html"><span class="brand__title">BOQ Estimator v4</span><span class="brand__meta">Regional cost route</span></a>
+      <div class="sidebar__group">
+        <div class="sidebar__label">Routes</div>
+        <a class="sidebar__link" href="boq-estimator-v4.html">BOQ Estimator</a>
+        <a class="sidebar__link is-active" href="cost-estimator-v4.html">Cost Estimator</a>
+        <a class="sidebar__link" href="access.html">Access</a>
+      </div>
+      <div class="sidebar__group">
+        <div class="sidebar__label">Commercial outputs</div>
+        <div class="tag-list">
+          <span class="tag">Benchmarks</span>
+          <span class="tag">Rate Book</span>
+          <span class="tag">Material Takeoff</span>
+          <span class="tag">PDF Export</span>
+        </div>
+      </div>
+    </aside>
+    <main class="main-area">
+      <div class="topbar">
+        <div class="title-block">
+          <h1 style="font-size:2.2rem">Cost Estimator v4</h1>
+          <p>Use the generated BOQ as the commercial base, switch markets, compare against project-type benchmarks, and review rate-book-driven pricing across Saudi Arabia, UAE, India, UK, USA, Australia, Europe and Global references.</p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn-secondary" href="boq-estimator-v4.html">Back to BOQ</a>
+          <button class="btn btn-primary" id="btn-export-cost">Export PDF Report</button>
+        </div>
+      </div>
+
+      <section class="panel">
+        <div class="section__head"><div><h2>Commercial Controls</h2><p>Change the market, project type and commercial percentages to see how the estimate moves.</p></div></div>
+        <form id="cost-form" class="grid-4">
+          <div class="field"><label>Region</label><select class="select" name="region"><option value="saudi">Saudi Arabia</option><option value="uae">UAE</option><option value="india">India</option><option value="uk">UK</option><option value="usa">USA</option><option value="australia">Australia</option><option value="europe">Europe</option><option value="global">Global</option></select></div>
+          <div class="field"><label>Project Type</label><select class="select" name="projectType"><option value="residential">Residential</option><option value="commercial_office">Commercial - Office</option><option value="commercial_retail">Commercial - Retail</option><option value="mixed_use">Mixed Use</option><option value="industrial">Industrial</option><option value="hospitality">Hospitality</option><option value="healthcare">Healthcare</option></select></div>
+          <div class="field"><label>Contingency %</label><input class="input" type="number" step="0.01" name="contingencyPct"/></div>
+          <div class="field"><label>Tax / VAT %</label><input class="input" type="number" step="0.01" name="taxPct"/></div>
+        </form>
+      </section>
+
+      <section id="cost-output"></section>
+    </main>
+  </div>
+  <script src="assets/app.js"></script>
+</body>
+</html>
+

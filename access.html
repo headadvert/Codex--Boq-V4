@@ -1,0 +1,91 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Access BOQ Estimator v4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="assets/app.css"/>
+</head>
+<body data-page="access" data-allow-public="true">
+  <div class="auth-shell">
+    <div class="auth-card">
+      <section class="auth-panel panel">
+        <span class="eyebrow">v3-style lead capture and package access</span>
+        <h1 style="font-size:2.5rem;margin-top:16px">Access the v4 BOQ and Cost suite.</h1>
+        <p class="lead" style="font-size:1rem">This keeps the same overall v3 commercial idea: collect user details, offer a free tier, and provide monthly and annual paid plans with WhatsApp ordering and code activation.</p>
+        <ul>
+          <li>Free for lighter evaluation and browser-based saving.</li>
+          <li>Monthly for ongoing access with easier short-term commitment.</li>
+          <li>Annual for best value and long-term usage.</li>
+        </ul>
+      </section>
+      <section class="auth-form panel">
+        <div class="auth-step">
+          <span class="step-chip is-active">1. Lead</span>
+          <span class="step-chip is-active">2. Package</span>
+          <span class="step-chip is-active">3. Access</span>
+        </div>
+        <form id="lead-form" class="form-stack">
+          <div class="field"><label>Name</label><input class="input" id="lead-name" required/></div>
+          <div class="grid-2">
+            <div class="field"><label>Email</label><input class="input" id="lead-email" type="email" required/></div>
+            <div class="field"><label>Phone / WhatsApp</label><input class="input" id="lead-phone" required/></div>
+          </div>
+          <div class="field"><label>Role</label><select class="select" id="lead-role" required><option value="">Select role</option><option>Quantity Surveyor</option><option>Cost Estimator</option><option>Contractor</option><option>Developer</option><option>Architect</option><option>Engineer</option></select></div>
+          <div class="field"><label>Purpose</label><textarea class="textarea" id="lead-purpose" placeholder="Project type, size, market, and what you want from the BOQ or cost plan"></textarea></div>
+
+          <div class="plan-grid" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+            <div class="plan-card is-selected" data-plan="free">
+              <div class="plan-card__eyebrow">Free</div>
+              <div class="plan-card__price">0</div>
+              <ul>
+                <li>BOQ route access</li>
+                <li>Basic cost review</li>
+                <li>Local browser save</li>
+              </ul>
+            </div>
+            <div class="plan-card" data-plan="monthly">
+              <div class="plan-card__eyebrow">Monthly</div>
+              <div class="plan-card__price">Plan</div>
+              <ul>
+                <li>BOQ + Cost routes</li>
+                <li>Separate package and VE tools</li>
+                <li>Good for active short projects</li>
+              </ul>
+            </div>
+            <div class="plan-card" data-plan="annual">
+              <div class="plan-card__eyebrow">Annual</div>
+              <div class="plan-card__price">Plan</div>
+              <ul>
+                <li>Best value access path</li>
+                <li>Full feature usage</li>
+                <li>Suitable for regular estimators</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="note" id="access-summary">Free access includes both routes for evaluation with local saved data in this browser. For full commercial use, choose monthly or annual.</div>
+          <div class="tool-actions">
+            <button class="btn btn-primary" type="submit">Continue</button>
+            <a class="btn btn-secondary" href="https://headadvert.github.io/Codex-BOQ-Estimator/" target="_blank">Read Package Info</a>
+          </div>
+        </form>
+
+        <div id="access-result" class="hidden" style="margin-top:18px">
+          <div class="note"><strong>WhatsApp order initiated.</strong><br/>After confirmation, enter the Pro code below to unlock direct route access.</div>
+        </div>
+
+        <form id="code-form" class="form-stack" style="margin-top:18px">
+          <div class="field"><label>Access Code</label><input class="input" id="access-code" placeholder="BOQ-V4-PRO"/></div>
+          <div class="text-danger" id="code-error"></div>
+          <button class="btn btn-secondary" type="submit">Verify Code</button>
+        </form>
+      </section>
+    </div>
+  </div>
+  <script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>BOQ Estimator v4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="assets/app.css"/>
+</head>
+<body data-page="boq">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="index.html"><span class="brand__title">BOQ Estimator v4</span><span class="brand__meta">Room-wise takeoff suite</span></a>
+      <div class="sidebar__group">
+        <div class="sidebar__label">Routes</div>
+        <a class="sidebar__link is-active" href="boq-estimator-v4.html">BOQ Estimator</a>
+        <a class="sidebar__link" href="cost-estimator-v4.html">Cost Estimator</a>
+        <a class="sidebar__link" href="access.html">Access</a>
+        <a class="sidebar__link" href="index.html">Landing</a>
+      </div>
+      <div class="sidebar__group">
+        <div class="sidebar__label">In-App Tools</div>
+        <a class="sidebar__link" href="#boq-output">Detailed BOQ</a>
+        <a class="sidebar__link" href="#package-tool">Subcontractor Packages</a>
+        <a class="sidebar__link" href="#value-tool">Value Engineering</a>
+      </div>
+    </aside>
+    <main class="main-area">
+      <div class="topbar">
+        <div class="title-block">
+          <h1 style="font-size:2.2rem">BOQ Estimator v4</h1>
+          <p>Setup the project, select the project type and market, auto-build floors and rooms from the chosen scope, then generate a room-wise BOQ. Value engineering and subcontractor package generation remain separate in-app tools.</p>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-secondary" id="btn-export-report">Export Full PDF Report</button>
+          <button class="btn btn-primary" id="btn-sync-cost">Open Cost Estimator</button>
+        </div>
+      </div>
+
+      <div class="stepper">
+        <div class="stepper__item is-active"><strong>1. Project setup</strong><span>Market, code, project scope and commercial assumptions</span></div>
+        <div class="stepper__item is-active"><strong>2. Scope layout</strong><span>Generate floors and rooms from project type</span></div>
+        <div class="stepper__item is-active"><strong>3. Scope selection</strong><span>User picks required packages</span></div>
+        <div class="stepper__item is-active"><strong>4. BOQ generation</strong><span>Detailed line items and pricing</span></div>
+        <div class="stepper__item is-active"><strong>5. Separate tools</strong><span>Packages and VE on demand</span></div>
+      </div>
+
+      <div class="metric-grid" style="margin-bottom:16px">
+        <div class="metric-card"><div class="metric-card__label">Floors</div><div class="metric-card__value" id="metric-floors">0</div><div class="metric-card__note">Current project stack</div></div>
+        <div class="metric-card"><div class="metric-card__label">Rooms</div><div class="metric-card__value" id="metric-rooms">0</div><div class="metric-card__note">Detailed space records</div></div>
+        <div class="metric-card"><div class="metric-card__label">Gross floor area</div><div class="metric-card__value" id="metric-gfa">0 m²</div><div class="metric-card__note">Calculated from room dimensions</div></div>
+        <div class="metric-card"><div class="metric-card__label">Market</div><div class="metric-card__value" id="metric-region">Saudi Arabia</div><div class="metric-card__note">Used for rate book and benchmarks</div></div>
+      </div>
+
+      <section class="panel">
+        <div class="section__head"><div><h2>Project Setup</h2><p>Choose the project type, market and building code. The app then adapts the floor and room structure to that scope instead of forcing one single template.</p></div></div>
+        <form id="project-form" class="form-stack">
+          <div class="grid-3">
+            <div class="field"><label>Project Name</label><input class="input" name="name"/></div>
+            <div class="field"><label>Client</label><input class="input" name="client"/></div>
+            <div class="field"><label>Location</label><input class="input" name="location"/></div>
+            <div class="field"><label>Region</label><select class="select" name="region"><option value="saudi">Saudi Arabia</option><option value="uae">UAE</option><option value="india">India</option><option value="uk">UK</option><option value="usa">USA</option><option value="australia">Australia</option><option value="europe">Europe</option><option value="global">Global</option></select></div>
+            <div class="field"><label>Project Type</label><select class="select" name="projectType"><option value="residential">Residential</option><option value="commercial_office">Commercial - Office</option><option value="commercial_retail">Commercial - Retail</option><option value="mixed_use">Mixed Use</option><option value="industrial">Industrial</option><option value="hospitality">Hospitality</option><option value="healthcare">Healthcare</option></select></div>
+            <div class="field"><label>Building Code</label><select class="select" name="buildingCode"><option value="SBC304">SBC 304 - Saudi Arabia</option><option value="UAEIBC">IBC / ACI - UAE</option><option value="EC2">Eurocode 2 - UK / Europe</option><option value="IS456">IS 456 - India</option><option value="ACI318">ACI 318 - USA</option><option value="AS3600">AS 3600 - Australia</option><option value="INTL">International / Global</option></select></div>
+          </div>
+          <div class="grid-4">
+            <div class="field"><label>No. of Floors</label><input class="input" type="number" step="1" name="floorsCount"/></div>
+            <div class="field"><label>Rooms / Zones Per Floor</label><input class="input" type="number" step="1" name="roomsPerFloor"/></div>
+            <div class="field"><label>Site Area (m²)</label><input class="input" type="number" step="0.01" name="siteArea"/></div>
+            <div class="field"><label>Facade Factor</label><input class="input" type="number" step="0.01" name="facadeFactor"/></div>
+            <div class="field"><label>Solar Roof Share</label><input class="input" type="number" step="0.01" name="solarRoofShare"/></div>
+            <div class="field"><label>Industrial Coverage</label><input class="input" type="number" step="0.01" name="industrialCoverage"/></div>
+            <div class="field"><label>Excavation Depth (m)</label><input class="input" type="number" step="0.01" name="excavationDepth"/></div>
+            <div class="field"><label>Backfill Ratio</label><input class="input" type="number" step="0.01" name="backfillRatio"/></div>
+            <div class="field"><label>Contingency %</label><input class="input" type="number" step="0.01" name="contingencyPct"/></div>
+            <div class="field"><label>Tax / VAT %</label><input class="input" type="number" step="0.01" name="taxPct"/></div>
+          </div>
+          <div class="tool-actions">
+            <button type="button" class="btn btn-secondary" id="btn-build-layout">Generate Floors and Rooms</button>
+          </div>
+          <div class="field"><label>Commercial Notes</label><textarea class="textarea" name="notes" placeholder="Project notes, assumptions, exclusions, or internal review comments"></textarea></div>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="section__head"><div><h2>Scope Selection</h2><p>The user must choose which packages are included in the BOQ and costing. Room-wise specs then drive the quantities under those selections.</p></div></div>
+        <div class="scope-checks" id="scope-selector"></div>
+      </section>
+
+      <section class="panel">
+        <div class="section__head"><div><h2>Floors and Rooms</h2><p>Use the auto-generated layout, then adjust any floor or room in detail. Quick dropdowns below help navigate large projects.</p></div><div class="btn-row"><button class="btn btn-secondary" id="btn-add-floor">Add Floor</button><button class="btn btn-primary" id="btn-generate-boq">Generate BOQ and Costing</button></div></div>
+        <div class="grid-2" style="margin-bottom:14px">
+          <div class="field"><label>Jump to Floor</label><select class="select" id="floor-jump"><option value="">Select floor</option></select></div>
+          <div class="field"><label>Jump to Room</label><select class="select" id="room-jump"><option value="">Select room</option></select></div>
+        </div>
+        <div id="floors-wrap"></div>
+      </section>
+
+      <section id="boq-output"></section>
+
+      <section class="panel" id="package-tool">
+        <div class="section__head"><div><h2>Subcontractor Packages</h2><p>Generate scope-wise package PDFs only when needed. Each package includes related materials, quantities and issue-ready scope notes for that trade.</p></div></div>
+        <div id="package-output"></div>
+      </section>
+
+      <section class="panel" id="value-tool">
+        <div class="section__head"><div><h2>Value Engineering</h2><p>Keep value engineering as a separate workflow inside the app so users can review practical cost and coordination opportunities without cluttering the main BOQ table.</p></div></div>
+        <div id="value-output"></div>
+      </section>
+    </main>
+  </div>
+  <script src="assets/app.js"></script>
+</body>
+</html>
